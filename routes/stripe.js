@@ -16,8 +16,8 @@ router.post("/checkout", async (req, res) => {
     {
       line_items: req.body.items,
       mode: "payment",
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: "https://alora-store.netlify.app/success",
+      cancel_url: "https://alora-store.netlify.app/cancel",
     },
     {
       // Provide your Stripe API key here
