@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 //CREATE
 
-router.post("/", verifyAdmin, async (req, res) => {
+router.post("/", async (req, res) => {
   const newProduct = new Product(req.body);
 
   try {
@@ -44,13 +44,9 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 
 //add review
 
-<<<<<<< HEAD
-router.put("/review/:productID/:id", verifyToken, async (req, res, next) => {
-=======
-router.put("/review/:productID/:id", verifyUser, async (req, res) => {
->>>>>>> 0d59ae26cbf74ad8d80f0b14b37d77b518e8418c
+router.put("/review/:id", async (req, res) => {
   try {
-    const product = await Product.findById(req.params.productID);
+    const product = await Product.findById(req.params.id);
 
     const totalRating = product.rating * product.reviews.length + req.body.star;
     const newNumReviews = product.reviews.length + 1;
@@ -58,7 +54,7 @@ router.put("/review/:productID/:id", verifyUser, async (req, res) => {
 
     // Update the product with the new values
     const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.productID,
+      req.params.id,
       {
         $push: { reviews: req.body },
         $inc: { [`numReviews.${req.body.star}`]: 1 },
@@ -105,7 +101,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.delete("/delete", verifyAdmin, async (req, res) => {
+router.delete("/delete", async (req, res) => {
   try {
     await Product.deleteMany({});
 

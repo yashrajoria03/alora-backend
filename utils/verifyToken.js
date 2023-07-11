@@ -34,16 +34,15 @@ import jwt from "jsonwebtoken";
 // };
 
 export const verifyToken = (req, res, next) => {
-  const authHeader = req.headers.cookie;
+  const authHeader = req.headers["authorization"];
+  // console.log("auth headers:", authHeader);
   // console.log("auth:", req.cookies);
   if (authHeader) {
-    // console.log(authHeader);
-    const token = authHeader.split("=")[1];
-    console.log(token);
+    const token = authHeader.split(" ")[1];
+    // console.log(token);
     // console.log(jwt.decode(token));
     jwt.verify(token, process.env.JWT, (err, user) => {
       if (err) return res.status(403).json("Token is not valid!");
-      // console.log(user);
       req.user = user;
       next();
     });
@@ -54,7 +53,6 @@ export const verifyToken = (req, res, next) => {
 
 export const verifyUser = (req, res, next) => {
   verifyToken(req, res, () => {
-    // console.log(req);
     if (req.user.id === req.params.id || req.user.isAdmin) {
       console.log("user verified!");
       next();
