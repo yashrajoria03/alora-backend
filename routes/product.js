@@ -44,9 +44,9 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 
 //add review
 
-router.put("/review/:id", verifyUser, async (req, res) => {
+router.put("/review/:productID/:id", verifyUser, async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.productID);
 
     const totalRating = product.rating * product.reviews.length + req.body.star;
     const newNumReviews = product.reviews.length + 1;
