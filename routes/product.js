@@ -44,7 +44,11 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 
 //add review
 
+<<<<<<< HEAD
 router.put("/review/:productID/:id", verifyToken, async (req, res, next) => {
+=======
+router.put("/review/:productID/:id", verifyUser, async (req, res) => {
+>>>>>>> 0d59ae26cbf74ad8d80f0b14b37d77b518e8418c
   try {
     const product = await Product.findById(req.params.productID);
 
