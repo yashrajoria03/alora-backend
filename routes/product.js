@@ -54,7 +54,7 @@ router.put("/review/:productID/:id", verifyUser, async (req, res) => {
 
     // Update the product with the new values
     const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
+      req.params.productID,
       {
         $push: { reviews: req.body },
         $inc: { [`numReviews.${req.body.star}`]: 1 },
