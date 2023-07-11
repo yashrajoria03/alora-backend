@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 //CREATE
 
-router.post("/", async (req, res) => {
+router.post("/", verifyAdmin, async (req, res) => {
   const newProduct = new Product(req.body);
 
   try {
@@ -44,7 +44,7 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 
 //add review
 
-router.put("/review/:id", async (req, res) => {
+router.put("/review/:id", verifyUser, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -101,7 +101,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.delete("/delete", async (req, res) => {
+router.delete("/delete", verifyAdmin, async (req, res) => {
   try {
     await Product.deleteMany({});
 
