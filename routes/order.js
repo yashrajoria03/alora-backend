@@ -5,7 +5,7 @@ const router = express.Router();
 
 //CREATE
 
-router.post("/:id", verifyUser, async (req, res) => {
+router.post("/:id", async (req, res) => {
   const newOrder = new Order(req.body);
 
   try {
@@ -17,7 +17,7 @@ router.post("/:id", verifyUser, async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyUser, async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
@@ -43,7 +43,7 @@ router.delete("/:id", verifyAdmin, async (req, res) => {
 });
 
 //GET USER ORDERS
-router.get("/find/:id", verifyUser, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
   try {
     const orders = await Order.find({ id: req.params.userId });
     res.status(200).json(orders);

@@ -44,9 +44,9 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 
 //add review
 
-router.put("/review/:id", verifyUser, async (req, res) => {
+router.put("/review/:productID/:id", verifyToken, async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.productID);
 
     const totalRating = product.rating * product.reviews.length + req.body.star;
     const newNumReviews = product.reviews.length + 1;
@@ -54,7 +54,7 @@ router.put("/review/:id", verifyUser, async (req, res) => {
 
     // Update the product with the new values
     const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
+      req.params.productID,
       {
         $push: { reviews: req.body },
         $inc: { [`numReviews.${req.body.star}`]: 1 },

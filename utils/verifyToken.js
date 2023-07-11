@@ -37,8 +37,9 @@ export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.cookie;
   // console.log("auth:", req.cookies);
   if (authHeader) {
+    // console.log(authHeader);
     const token = authHeader.split("=")[1];
-    // console.log(token);
+    console.log(token);
     // console.log(jwt.decode(token));
     jwt.verify(token, process.env.JWT, (err, user) => {
       if (err) return res.status(403).json("Token is not valid!");
@@ -53,7 +54,7 @@ export const verifyToken = (req, res, next) => {
 
 export const verifyUser = (req, res, next) => {
   verifyToken(req, res, () => {
-    console.log(req);
+    // console.log(req);
     if (req.user.id === req.params.id || req.user.isAdmin) {
       console.log("user verified!");
       next();
