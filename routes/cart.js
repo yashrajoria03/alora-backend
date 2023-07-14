@@ -5,7 +5,7 @@ import Product from "../models/Product.js";
 const router = express.Router();
 
 //get cart
-router.get("/find/:id", async (req, res, next) => {
+router.get("/find/:id/:token", verifyUser, async (req, res, next) => {
   const userId = req.params.id;
   try {
     const cart = await Cart.findOne({ userId });
@@ -21,7 +21,7 @@ router.get("/find/:id", async (req, res, next) => {
 });
 
 //add to cart
-router.post("/:id", async (req, res, next) => {
+router.post("/:id/:token", verifyUser, async (req, res, next) => {
   const userId = req.params.id;
   const { productId, quantity } = req.body;
   try {
@@ -60,7 +60,7 @@ router.post("/:id", async (req, res, next) => {
 
 //delete item
 
-router.delete("/:userId/:itemId", async (req, res, next) => {
+router.delete("/:userId/:itemId/:token", verifyUser, async (req, res, next) => {
   const userId = req.params.userId;
   const productId = req.params.itemId;
   try {
@@ -81,7 +81,7 @@ router.delete("/:userId/:itemId", async (req, res, next) => {
     console.log(err);
   }
 });
-router.delete("/:userId", async (req, res) => {
+router.delete("/:userId/:token", verifyUser, async (req, res) => {
   const userId = req.params.userId;
   try {
     const cart = await Cart.findOne({ userId });

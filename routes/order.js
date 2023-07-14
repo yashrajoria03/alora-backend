@@ -5,7 +5,7 @@ const router = express.Router();
 
 //CREATE
 
-router.post("/", async (req, res) => {
+router.post("/:token", verifyUser, async (req, res) => {
   const newOrder = new Order(req.body);
 
   try {
@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyAdmin, async (req, res) => {
+router.put("/:id/:token", verifyAdmin, async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
@@ -33,7 +33,7 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verifyAdmin, async (req, res) => {
+router.delete("/:id/:token", verifyAdmin, async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
     res.status(200).json("Order has been deleted...");
@@ -43,7 +43,7 @@ router.delete("/:id", verifyAdmin, async (req, res) => {
 });
 
 //GET USER ORDERS
-router.get("/find/:userId", async (req, res) => {
+router.get("/find/:userId/:token", verifyUser, async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.userId });
     res.status(200).json(orders);
@@ -54,7 +54,7 @@ router.get("/find/:userId", async (req, res) => {
 
 // //GET ALL
 
-router.get("/", verifyAdmin, async (req, res) => {
+router.get("/:token", verifyAdmin, async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);

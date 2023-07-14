@@ -3,8 +3,8 @@ import Product from "../models/Product.js";
 import { verifyToken, verifyUser, verifyAdmin } from "../utils/verifyToken.js";
 import express from "express";
 const router = express.Router();
-//CREATE
 
+//CREATE
 router.post("/", async (req, res) => {
   const newProduct = new Product(req.body);
 
@@ -44,7 +44,7 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 
 //add review
 
-router.put("/review/:id", async (req, res) => {
+router.put("/review/:id/:token", verifyUser, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -101,7 +101,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.delete("/delete", async (req, res) => {
+router.delete("/delete", verifyAdmin, async (req, res) => {
   try {
     await Product.deleteMany({});
 
