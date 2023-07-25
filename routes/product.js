@@ -80,17 +80,11 @@ router.get("/find/:id", async (req, res) => {
 });
 
 //GET ALL PRODUCTS
-router.get("/", async (req, res) => {
+router.get("/?qSearch", async (req, res) => {
   const qSearch = req.query.search;
   try {
     let products;
     if (qSearch) {
-      // await Product.createIndex({ title: "text", desc: "text" });
-      // await Product.createIndex({
-      //   title: "text",
-      //   desc: "text",
-      // });
-      // qSearch = qSearch.toString();
       products = await Product.find({ $text: { $search: qSearch } });
     } else {
       products = await Product.find().sort({ createdAt: -1 }).limit(10);
