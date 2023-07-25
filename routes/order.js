@@ -5,7 +5,7 @@ const router = express.Router();
 
 //CREATE
 
-router.post("/:token", verifyUser, async (req, res) => {
+router.post("/:id/:token", verifyUser, async (req, res) => {
   const newOrder = new Order(req.body);
 
   try {
