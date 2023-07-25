@@ -11,43 +11,12 @@ import stripe from "./routes/stripe.js";
 // import passport from "passport";
 // import cookieSession from "cookie-session";
 // import "./passport.js";
-// import path from "path";
+import path from "path";
 
 const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     key: ["FBC44C16861FC4CE5D64B4A5DFCD3"],
-//     maxAge: 24 * 60 * 60 * 100,
-//   })
-// );
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passport.use(
-//   new GoogleStrategy(
-//     {
-//       clientID: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//       callbackURL: "/api/auth/google/callback",
-//       scope: ["profile", "email"],
-//     },
-//     function (accessToken, refreshToken, profile, callback) {
-//       callback(null, profile);
-//     }
-//   )
-// );
-
-// passport.serializeUser((user, done) => {
-//   done(null, user);
-// });
-
-// passport.deserializeUser((user, done) => {
-//   done(null, user);
-// });
 
 mongoose.connection.on("diconnected", () => {
   console.log("disconnected from DB.");
