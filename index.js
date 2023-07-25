@@ -3,23 +3,55 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoute from "./routes/auth.js";
-// import userRoute from "./routes/user.js";
+import userRoute from "./routes/user.js";
 import cartRoute from "./routes/cart.js";
 import orderRoute from "./routes/order.js";
 import productRoute from "./routes/product.js";
 import stripe from "./routes/stripe.js";
+// import passport from "passport";
+// import cookieSession from "cookie-session";
+// import "./passport.js";
 // import path from "path";
 
 const app = express();
 dotenv.config();
 app.use(express.json());
-// app.use(passport.initialize());
 app.use(cors());
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     key: ["FBC44C16861FC4CE5D64B4A5DFCD3"],
+//     maxAge: 24 * 60 * 60 * 100,
+//   })
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//       callbackURL: "/api/auth/google/callback",
+//       scope: ["profile", "email"],
+//     },
+//     function (accessToken, refreshToken, profile, callback) {
+//       callback(null, profile);
+//     }
+//   )
+// );
+
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
+
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
 
 mongoose.connection.on("diconnected", () => {
   console.log("disconnected from DB.");
 });
-
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL);
@@ -29,7 +61,7 @@ const connectDB = async () => {
   }
 };
 
-// app.use("/api/users", userRoute);
+app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
