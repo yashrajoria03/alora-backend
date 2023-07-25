@@ -61,7 +61,7 @@ router.post("/:id/:token", verifyUser, async (req, res, next) => {
 //delete item
 
 router.delete("/:id/:itemId/:token", verifyUser, async (req, res, next) => {
-  const userId = req.params.userId;
+  const userId = req.params.id;
   const productId = req.params.itemId;
   try {
     const cart = await Cart.findOne({ userId });
@@ -82,7 +82,7 @@ router.delete("/:id/:itemId/:token", verifyUser, async (req, res, next) => {
   }
 });
 router.delete("/:id/:token", verifyUser, async (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.params.id;
   try {
     const cart = await Cart.findOne({ userId });
     const cartId = cart._id;
